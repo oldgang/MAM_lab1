@@ -27,16 +27,13 @@
         app:layout_constraintStart_toStartOf="@+id/textAccelerometer"
         app:layout_constraintTop_toBottomOf="@+id/textAccelerometer" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="270dp"
-        android:layout_height="262dp"
-        app:layout_constraintBottom_toTopOf="@+id/textAccelerometer"
+    <com.example.lab1.CompassView
+        android:id="@+id/compass"
+        android:layout_width="225dp"
+        android:layout_height="225dp"
+        android:layout_marginTop="128dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.584"
-        app:srcCompat="@mipmap/compass" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

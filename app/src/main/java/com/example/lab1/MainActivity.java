@@ -1,14 +1,21 @@
 
 package com.example.lab1;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import com.example.lab1.CompassView;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     SensorManager sm;
@@ -28,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     float pitch;
     float roll;
 
+    CompassView compass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         accelText = (TextView) findViewById(R.id.textAccelerometer);
         orientationText = (TextView) findViewById(R.id.textOrientation);
+
+        compass = (CompassView) findViewById(R.id.compass);
     }
 
     @Override
@@ -80,10 +91,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 magnetic = sensorEvent.values.clone();
                 break;
         }
-        if(gravity != null && magnetic != null) {
+        if(accelerometer != null && magnetic != null) {
             float[] R = new float[9];
             float[] I = new float[9];
-            boolean success = SensorManager.getRotationMatrix(R, I, gravity, magnetic);
+            boolean success = SensorManager.getRotationMatrix(R, I, accelerometer, magnetic);
             if(success){
                 SensorManager.getOrientation(R, orientation);
                 azimuth = orientation[0];
@@ -92,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 String txt = "\nOrientation:\nAzimuth: " + azimuth + "\nPitch: " + pitch + "\nRoll: " + roll;
                 orientationText.setText(txt);
             }
+            compass.set_azimuth(-azimuth * 360f / (2f * 3.14159f));
         }
     }
 
@@ -99,5 +111,4 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int i) {
     }
 
-    //do 3 zadania wyklad slajd 'wlasna klasa widoku'
 }
